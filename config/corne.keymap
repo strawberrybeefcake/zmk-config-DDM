@@ -5,7 +5,7 @@
                 &none        LT  RT &out OUT_TOG                                       \
                 &none        LM  RM &none                                              \
                 &none        LB  RB &none                                              \
-                &out OUT_TOG LH  RH &none                                          \
+                &out OUT_USB LH  RH &none                                          \
     )
 
 #include "zmk-helpers/key-labels/42.h"
