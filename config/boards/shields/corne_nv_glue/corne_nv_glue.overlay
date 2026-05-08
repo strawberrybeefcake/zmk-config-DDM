@@ -1,0 +1,27 @@
+/*
+ * SPDX-License-Identifier: MIT
+ *
+ * "Glue" shield: bridges the corne shield's OLED I2C footprint to a
+ * Nice!View SPI bus. Used in the shield combination:
+ *
+ *     corne_left  nice_view_adapter  corne_nv_glue  nice_view
+ *     corne_right nice_view_adapter  corne_nv_glue  nice_view
+ *
+ * The order matters: corne_nv_glue must come BEFORE nice_view so this
+ * overlay is parsed first and defines &nice_view_spi (which nice_view's
+ * own overlay then references).
+ *
+ * Upstream nice_view_adapter.overlay is empty; per its README the user
+ * must provide the SPI bus. We relabel pro_micro_spi (which sits on the
+ * same MCU pads as the OLED's pro_micro_i2c) and bodge CS to D1, which
+ * matches the nice_view_adapter README's documented convention.
+ */
+
+&pro_micro_i2c {
+    status = "disabled";
+};
+
+nice_view_spi: &pro_micro_spi {
+    status = "okay";
+    cs-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
+};

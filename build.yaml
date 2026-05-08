@@ -29,12 +29,13 @@ include:
     shield: corne_right
 
   # Nice!View Corne (set 2) — same keymap, different display hardware.
-  # nice_view_spi label is defined in corne.keymap under #ifdef
-  # CONFIG_SHIELD_NICE_VIEW since upstream's nice_view_adapter.overlay is empty.
+  # corne_nv_glue is a user-config shield (config/boards/shields/corne_nv_glue/)
+  # that defines &nice_view_spi. It must come BEFORE nice_view in the shield
+  # list so its overlay is parsed first.
   - board: nice_nano@2
-    shield: corne_left nice_view_adapter nice_view
+    shield: corne_left nice_view_adapter corne_nv_glue nice_view
   - board: nice_nano@2
-    shield: corne_right nice_view_adapter nice_view
+    shield: corne_right nice_view_adapter corne_nv_glue nice_view
 
   - board: nice_nano@2
     shield: settings_reset
