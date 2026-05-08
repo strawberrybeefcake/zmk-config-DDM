@@ -12,3 +12,17 @@
 #include "base.keymap"
 
 /{ chosen { zmk,physical-layout = &foostan_corne_6col_layout; }; };
+
+/* Nice!View hardware setup. Upstream's nice_view_adapter.overlay is empty
+ * (has been since 2022); its README says the user must provide the SPI bus
+ * themselves. We relabel pro_micro_spi as nice_view_spi, set CS to D1 per
+ * the adapter's documented bodge convention, and disable the OLED I2C bus
+ * since they share pads. Scoped via CONFIG_SHIELD_NICE_VIEW so OLED builds
+ * are untouched. */
+#ifdef CONFIG_SHIELD_NICE_VIEW
+&pro_micro_i2c { status = "disabled"; };
+nice_view_spi: &pro_micro_spi {
+    status = "okay";
+    cs-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
+};
+#endif
