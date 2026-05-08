@@ -20,19 +20,19 @@ include:
   #- board: glove80_lh
   #- board: glove80_rh
 
+  # OLED Corne (set 1)
   - board: nice_nano@2
     shield: corne_left
-    snippet: zmk-usb-logging
-    #snippet: studio-rpc-usb-uart
+    #snippet: zmk-usb-logging         # Re-enable to debug central via USB serial
     #cmake-args: -DCONFIG_ZMK_STUDIO=y
   - board: nice_nano@2
     shield: corne_right
 
+  # Nice!View Corne (set 2) — same keymap, different display hardware
+  - board: nice_nano@2
+    shield: corne_left nice_view_adapter nice_view
+  - board: nice_nano@2
+    shield: corne_right nice_view_adapter nice_view
+
   - board: nice_nano@2
     shield: settings_reset
-  #- board: nice_nano_v2
-  #  shield: corne_left nice_view_adapter nice_view
-    #snippet: studio-rpc-usb-uart
-    #cmake-args: -DCONFIG_ZMK_STUDIO=y
-  #- board: nice_nano_v2
-  #  shield: corne_right nice_view_adapter nice_view
