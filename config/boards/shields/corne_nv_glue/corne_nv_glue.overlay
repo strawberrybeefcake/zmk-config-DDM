@@ -12,10 +12,33 @@
  * own overlay then references).
  *
  * Upstream nice_view_adapter.overlay is empty; per its README the user
- * must provide the SPI bus. We relabel pro_micro_spi (which sits on the
- * same MCU pads as the OLED's pro_micro_i2c) and bodge CS to D1, which
- * matches the nice_view_adapter README's documented convention.
+ * must provide the SPI bus.
+ *
+ * nice!nano's default spi1_default pinctrl routes SCK to P1.13 and
+ * MOSI to P0.10 — those pins are NOT on the Corne OLED footprint.
+ * The OLED footprint uses P0.17 (SDA) and P0.20 (SCL), which we
+ * re-purpose as MOSI and SCK for the SHARP LCD. CS is bodged to D1
+ * per nice_view_adapter README's documented convention.
  */
+
+#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
+
+&pinctrl {
+    nice_view_spi_default: nice_view_spi_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 20)>,    /* P0.20 = OLED SCL pad */
+                    <NRF_PSEL(SPIM_MOSI, 0, 17)>;   /* P0.17 = OLED SDA pad */
+        };
+    };
+
+    nice_view_spi_sleep: nice_view_spi_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 20)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 17)>;
+            low-power-enable;
+        };
+    };
+};
 
 &pro_micro_i2c {
     status = "disabled";
@@ -24,4 +47,7 @@
 nice_view_spi: &pro_micro_spi {
     status = "okay";
     cs-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
+    pinctrl-0 = <&nice_view_spi_default>;
+    pinctrl-1 = <&nice_view_spi_sleep>;
+    pinctrl-names = "default", "sleep";
 };
