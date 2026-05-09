@@ -1,0 +1,2 @@
+# Defconfig for the corne_nv_glue user shield. Nothing specific needed —
+# nice_view_adapter handles SSD1306 disable, our overlay handles the SPI bus.

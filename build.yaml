@@ -28,14 +28,14 @@ include:
   - board: nice_nano@2
     shield: corne_right
 
-  # Nice!View Corne (set 2) — disabled: upstream nice_view_adapter.overlay is
-  # empty and the corne shield doesn't define &nice_view_spi. Need a custom
-  # overlay before re-enabling. Currently fails with:
-  #   "parse error: undefined node label 'nice_view_spi'"
-  #- board: nice_nano@2
-  #  shield: corne_left nice_view_adapter nice_view
-  #- board: nice_nano@2
-  #  shield: corne_right nice_view_adapter nice_view
+  # Nice!View Corne (set 2) — same keymap, different display hardware.
+  # corne_nv_glue is a user-config shield (config/boards/shields/corne_nv_glue/)
+  # that defines &nice_view_spi. It must come BEFORE nice_view in the shield
+  # list so its overlay is parsed first.
+  - board: nice_nano@2
+    shield: corne_left nice_view_adapter corne_nv_glue nice_view
+  - board: nice_nano@2
+    shield: corne_right nice_view_adapter corne_nv_glue nice_view
 
   - board: nice_nano@2
     shield: settings_reset
