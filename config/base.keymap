@@ -22,6 +22,11 @@
 #define XXX &none
 #define ___ &trans
 
+/* Compound modifiers for HRM hold actions. Standard hyper/meh definitions
+ * compatible with Karabiner / Hammerspoon / AutoHotkey conventions. */
+#define HYPER LS(LC(LA(LGUI)))
+#define MEH   LS(LC(LALT))
+
 /* Global defaults */
 
 #define QUICK_TAP_MS 175
@@ -142,6 +147,11 @@ ZMK_TRI_STATE(swapper, bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
 SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
 SIMPLE_MORPH(comma_inner_morph, CTL, &kp SEMICOLON, &kp LESS_THAN)
 
+// Right-hand HRM whose tap binding is &comma_morph instead of &kp.
+// Used for the comma key so it can hold-as-HYPER while still preserving
+// the morph (tap=, shift+tap=; ctrl+shift+tap=<).
+MAKE_HRM(hmr_morph, &kp, &comma_morph, KEYS_L THUMBS)
+
 // Tap: dot | Shift + tap: colon | Ctrl + shift + tap: >.
 SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &dot_inner_morph)
 SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
@@ -191,11 +201,11 @@ ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
 ZMK_BASE_LAYER(Base,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-    &kp Q         &kp W         &kp F         &kp P         &kp B       ,   &kp J         &kp L         &kp U         &kp Y         &kp SQT     ,
+    &kp Q         &kp W         &hml MEH F    &kp P         &kp B       ,   &kp J         &kp L         &hmr MEH U    &kp Y         &kp SQT     ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     &hml LCTRL A   &hml LALT R   &hml LGUI S  &hml LSHFT T  &kp G       ,   &kp M         &hmr LSHFT N  &hmr RGUI E  &hmr LALT I   &hmr LCTRL O ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &kp Z         &kp X         &kp C         &kp D         &kp V       ,   &kp K         &kp H         &comma_morph  &dot_morph    &qexcl      ,
+    &kp Z         &kp X         &hml HYPER C  &kp D         &kp V       ,   &kp K         &kp H         &hmr_morph HYPER 0  &dot_morph  &qexcl  ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
                                               &lt_spc NAV 0 &lt FN RET  ,   SMART_NUM     MAGIC_SHIFT
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
