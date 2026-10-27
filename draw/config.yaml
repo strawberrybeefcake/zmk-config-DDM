@@ -2,32 +2,54 @@ parse_config:
   zmk_additional_includes:
     - "modules/zmk/helpers/include"
 
-  zmk_preamble: |
-    #include <zmk-helpers/key-labels/34.h>
-    #define CONFIG_WIRELESS
+  # No preamble: corne.keymap defines CONFIG_WIRELESS and includes the 42-key labels.
+
+  modifier_fn_map:
+    left_ctrl: "⌃"
+    right_ctrl: "⌃"
+    left_shift: "⇧"
+    right_shift: "⇧"
+    left_alt: "⌥"
+    right_alt: "⌥"
+    left_gui: "⌘"
+    right_gui: "⌘"
+    keycode_combiner: "{mods}{key}"
+    mod_combiner: "{mod_1}{mod_2}"
 
   raw_binding_map:
+    # HYPER/MEH HRMs (the modifier map would otherwise render e.g. "⇧⌃Opt").
+    "&hml LS(LC(LALT)) F": { "t": F, "h": Meh }
+    "&hmr LS(LC(LALT)) U": { "t": U, "h": Meh }
+    "&hml LS(LC(LA(LGUI))) C": { "t": C, "h": Hyper }
+    "&hmr_morph LS(LC(LA(LGUI))) 0": { "t": ",", "h": Hyper, "s": ";" }
+
     "&sys_reset": Reset
     "&bootloader": Boot
     "&caps_word": Caps Word
-    "&kp LA(F4)": Close
+    "&kp LG(W)": Close
 
-    "&bt BT_SEL 0": BT 1
-    "&bt BT_SEL 1": BT 2
-    "&bt BT_SEL 2": BT 3
-    "&bt BT_SEL 3": BT 4
+    "&bt BT_SEL 0": BT1
+    "&bt BT_SEL 1": BT2
+    "&bt BT_SEL 2": BT3
+    "&bt BT_SEL 3": BT4
+    "&out OUT_TOG": USB/BT
 
-    "&kp LC(INS)": Copy
-    "&kp LC(X)": Cut
-    "&kp LS(INS)": Paste
+    "&kp LG(C)": Copy
+    "&kp LG(X)": Cut
+    "&kp LG(V)": Paste
 
-    "&kp LG(LC(LEFT))": PDesk
-    "&kp LG(LC(RIGHT))": NDesk
-    "&kp LG(LC(LS(A)))": PinA.
-    "&kp LG(LC(LS(Q)))": PinW.
+    "&kp GLOBE": Globe
+    "&siri": Siri
 
-    "&swapper": NWin
-    "&kp LS(TAB)": PWin
+    "&kp LC(LEFT)": PDesk
+    "&kp LC(RIGHT)": NDesk
+    "&kp LC(UP)": MCtl
+    "&kp LC(DOWN)": $$mdi:dock-window$$
+    "&kp LG(GRAVE)": "⌘`"
+    "&kp LS(LC(LG(N4)))": $$mdi:monitor-screenshot$$
+
+    "&swapper": "⌘Tab"
+    "&kp LS(TAB)": "⇧Tab"
     "&dot_spc": Sentence
     "&num_dance": { "t": "Smart"}
     "&magic_shift": { "t": Magic, "h": "Shift" }
@@ -70,12 +92,12 @@ parse_config:
 
   zmk_keycode_map:
     # custom mappings
-    LALT: Alt
-    RALT: Alt
+    LALT: Opt
+    RALT: Opt
     LCTRL: Ctrl
     RCTRL: Ctrl
-    LGUI: Gui
-    RGUI: Gui
+    LGUI: Cmd
+    RGUI: Cmd
     LSHFT: Shift
     RSHFT: Shift
 
@@ -175,7 +197,7 @@ parse_config:
 draw_config:
   append_colon_to_layer_header: false
   dark_mode: false
-  footer_text: "urob/zmk-config"
+  footer_text: "strawberrybeefcake/zmk-config-DDM"
   glyph_tap_size: 15
   glyph_hold_size: 12
   glyph_shifted_size: 10
@@ -247,11 +269,17 @@ draw_config:
     text.bl, use.bl { fill: var(--color-num); }
     text.br, use.br { fill: var(--color-sys); }
 
-    .keypos-30 text.hold { fill: var(--color-nav); }
-    .keypos-31 text.hold { fill: var(--color-fn); }
-    .keypos-32 text.hold { fill: var(--color-num); font-size: 15px; }
-    .keypos-32 text.tap  { fill: var(--color-num); }
-    .keypos-33 text.hold { font-size: 15px; }
+    .keypos-37 text.hold { fill: var(--color-nav); }
+    .keypos-38 text.hold { fill: var(--color-fn); }
+    .keypos-39 text.hold { fill: var(--color-num); font-size: 15px; }
+    .keypos-39 text.tap  { fill: var(--color-num); }
+    .keypos-40 text.hold { font-size: 15px; }
+
+    /* Meh/Hyper HRM holds share the key bottom with number/BT corner labels. */
+    .keypos-3 text.hold, .keypos-8 text.hold, .keypos-27 text.hold, .keypos-32 text.hold { font-size: 10px; }
+    .keypos-3 text.hold  { transform: translate(-6px, -7px); }
+    .keypos-27 text.hold { transform: translateX(4px); }
+    .keypos-11 text.tap  { font-size: 11px; }
 
     .icon-tabler > path                             { fill: inherit; stroke: inherit; stroke-width: 2; }
     .icon-tabler > path[stroke="none"][fill="none"] { visibility: hidden; }
