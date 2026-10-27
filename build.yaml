@@ -34,12 +34,7 @@ include:
   # pin) and carries nice!view-specific widget overrides.
   - board: nice_nano//zmk
     shield: corne_left nice_view_adapter corne_nv_glue nice_view
-<<<<<<< HEAD
-  - board: nice_nano@2
-=======
-    snippet: zmk-usb-logging          # DEBUG: split reconnect investigation (work set)
   - board: nice_nano//zmk
->>>>>>> d881573 (Build Corne targets on the ZMK nice_nano variant (nice_nano//zmk))
     shield: corne_right nice_view_adapter corne_nv_glue nice_view
 
   - board: nice_nano//zmk
