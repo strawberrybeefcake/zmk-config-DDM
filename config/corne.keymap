@@ -3,18 +3,30 @@
     ZMK_LAYER(                                                                 \
         name,                                                                  \
                 &kp ESC      LT  RT &out OUT_TOG                                       \
-                &kp LG(Z)    LM  RM &none                                              \
-                &kp LG(LS(Z)) LB RB &none                                              \
-                LH_OUTER_##name LH RH &siri                                    \
+                L_OUTER(MID, name) LM RM &none                                 \
+                L_OUTER(BOT, name) LB RB &none                                 \
+                L_OUTER(THB, name) LH RH &siri                                 \
     )
 
-// Outer-left thumb: Globe everywhere except Num, where it's Tab.
-#define LH_OUTER_Base  &kp GLOBE
-#define LH_OUTER_Nav   &kp GLOBE
-#define LH_OUTER_Fn    &kp GLOBE
-#define LH_OUTER_Num   &kp TAB
-#define LH_OUTER_Sys   &kp GLOBE
-#define LH_OUTER_Mouse &kp GLOBE
+// Left outer column (middle, bottom) and outer-left thumb, per layer. Every
+// layer uses the standard set except Num, which uses the number-pad set.
+#define L_OUTER(POS, name) L_CAT(L_##POS##_, L_SET_##name)
+#define L_CAT(a, b) L_CAT_(a, b)
+#define L_CAT_(a, b) a##b
+
+#define L_SET_Base  STD
+#define L_SET_Nav   STD
+#define L_SET_Fn    STD
+#define L_SET_Num   NUMPAD
+#define L_SET_Sys   STD
+#define L_SET_Mouse STD
+
+#define L_MID_STD    CMD_UNDO
+#define L_BOT_STD    CMD_REDO
+#define L_THB_STD    &kp GLOBE
+#define L_MID_NUMPAD &kp BSPC
+#define L_BOT_NUMPAD CMD_UNDO
+#define L_THB_NUMPAD &kp TAB
 
 #include "zmk-helpers/key-labels/42.h"
 #include "base.keymap"
