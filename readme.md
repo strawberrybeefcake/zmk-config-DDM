@@ -25,7 +25,7 @@ manifest](https://github.com/urob/zmk-config/blob/main/config/west.yml).
   `dts-format` and `keymap-drawer`
 
 <img src="./draw/overview.svg" alt="Keymap layout" width="100%" /><br />
-([Click here](https://raw.githubusercontent.com/urob/zmk-config/refs/heads/main/draw/base.svg)
+([Click here](https://raw.githubusercontent.com/strawberrybeefcake/zmk-config-DDM/refs/heads/main/draw/base.svg)
 for a breakdown by layer – powered by
 [keymap-drawer](https://github.com/caksoylar/keymap-drawer).)
 
