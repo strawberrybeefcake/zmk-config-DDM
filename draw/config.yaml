@@ -40,6 +40,9 @@ parse_config:
 
     "&kp GLOBE": Globe
     "&siri": Siri
+    "&kp LG(Z)": Undo
+    "&kp LG(LS(Z))": Redo
+    "&inch": in
 
     "&kp LC(LEFT)": PDesk
     "&kp LC(RIGHT)": NDesk
@@ -280,6 +283,9 @@ draw_config:
     .keypos-3 text.hold  { transform: translate(-6px, -7px); }
     .keypos-27 text.hold { transform: translateX(4px); }
     .keypos-11 text.tap  { font-size: 11px; }
+
+    /* Num-layer Bspc/Enter share the bottom corners with Sys-layer Boot/Reset. */
+    .keypos-17 text.bl, .keypos-17 text.br, .keypos-29 text.bl, .keypos-29 text.br { font-size: 8px; }
 
     .icon-tabler > path                             { fill: inherit; stroke: inherit; stroke-width: 2; }
     .icon-tabler > path[stroke="none"][fill="none"] { visibility: hidden; }

@@ -60,7 +60,8 @@ draw: _check_yq_version
     #!/usr/bin/env bash
     set -euo pipefail
     keymap -c "{{ draw }}/config.yaml" parse -z "{{ config }}/corne.keymap" --virtual-layers Combos >"{{ draw }}/base.yaml"
-    yq -Yi '.combos.[].l = ["Combos"]' "{{ draw }}/base.yaml"
+    # Num-only combos (number-pad math) stay on the Num layer; the rest go to Combos.
+    yq -Yi '.combos |= map(if .l == ["Num"] then . else .l = ["Combos"] end)' "{{ draw }}/base.yaml"
     keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/base.yaml" -k corne_rotated -l LAYOUT_split_3x6_3 >"{{ draw }}/base.svg"
 
     # Corner labels skip keys that repeat the base label (the Corne's outer
@@ -85,7 +86,7 @@ draw: _check_yq_version
         ],
         Combos: .layers.Combos
         } |
-        .combos = [.combos[] | .l = ["Combos"]]
+        .combos = [.combos[] | select(.l != ["Num"]) | .l = ["Combos"]]
     '
     yq -y "$jq_expr" "{{ draw }}/base.yaml" >"{{ draw }}/overview.yaml"
     keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/overview.yaml" -k corne_rotated -l LAYOUT_split_3x6_3 >"{{ draw }}/overview.svg"

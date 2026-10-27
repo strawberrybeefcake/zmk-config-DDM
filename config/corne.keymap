@@ -2,11 +2,19 @@
 #define ZMK_BASE_LAYER(name, LT, RT, LM, RM, LB, RB, LH, RH)                   \
     ZMK_LAYER(                                                                 \
         name,                                                                  \
-                &none        LT  RT &out OUT_TOG                                       \
-                &none        LM  RM &none                                              \
-                &none        LB  RB &none                                              \
-                &kp GLOBE    LH  RH &siri                                          \
+                &kp ESC      LT  RT &out OUT_TOG                                       \
+                &kp LG(Z)    LM  RM &none                                              \
+                &kp LG(LS(Z)) LB RB &none                                              \
+                LH_OUTER_##name LH RH &siri                                    \
     )
+
+// Outer-left thumb: Globe everywhere except Num, where it's Tab.
+#define LH_OUTER_Base  &kp GLOBE
+#define LH_OUTER_Nav   &kp GLOBE
+#define LH_OUTER_Fn    &kp GLOBE
+#define LH_OUTER_Num   &kp TAB
+#define LH_OUTER_Sys   &kp GLOBE
+#define LH_OUTER_Mouse &kp GLOBE
 
 #include "zmk-helpers/key-labels/42.h"
 #include "base.keymap"
