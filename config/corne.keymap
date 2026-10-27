@@ -5,10 +5,17 @@
                 &none        LT  RT &out OUT_TOG                                       \
                 &none        LM  RM &none                                              \
                 &none        LB  RB &none                                              \
-                &kp GLOBE    LH  RH &none                                          \
+                &kp GLOBE    LH  RH &siri                                          \
     )
 
 #include "zmk-helpers/key-labels/42.h"
 #include "base.keymap"
+
+// Siri: holds Globe+S for as long as the key is held (tap = type to Siri,
+// hold = talk to Siri), like Apple's mic key.
+ZMK_MACRO(siri,
+    bindings = <&macro_press &kp GLOBE &kp S>,
+               <&macro_pause_for_release>,
+               <&macro_release &kp S &kp GLOBE>;)
 
 /{ chosen { zmk,physical-layout = &foostan_corne_6col_layout; }; };
